@@ -12,19 +12,24 @@ class TCPTransfer {
         val packet = Packet()
         packet.payload = commandContent
 
-        val socket = Socket("192.168.0.200", 3001)
+        val socket = Socket("192.168.0.200", 30001)
         val dataOutputStream = DataOutputStream(socket.getOutputStream())
-        val bufferedReader = BufferedReader(InputStreamReader(socket.getInputStream()))
+        val socketInputStream = socket.getInputStream()
 
         dataOutputStream.write(packet.getByteBuffer().array())
         dataOutputStream.flush()
 
         Log.i("", "Response:")
 
-        val charArray = CharArray(1024)
-        bufferedReader.read(charArray)
+        val byteArray = ByteArray(1024)
+        socketInputStream.read(byteArray)
+
+        val parsedPacket = Packet()
+        var readBytes = parsedPacket.parsePacketHead(byteArray)
+        val commandHead = CommandHead()
+        readBytes += commandHead.parse(byteArray, readBytes)
 
         dataOutputStream.close()
-        bufferedReader.close()
+        socketInputStream.close()
     }
 }

@@ -10,9 +10,9 @@ class LoginCommand(user: User) {
         commandHead.setPayloadLength(user.getSize())
         commandHead.setCommandId(CommandConst.CONST_COMMANDID_LOGIN)
         byteBuffer = ByteBuffer
-            .allocate(user.getSize() + commandHead.getSize())
-            .put(commandHead.getByteBuffer())
-            .put(user.getByteBuffer())
+            .allocate(user.getSize() + CommandHead.getSize())
+            .put(commandHead.getByteBuffer().array())
+            .put(user.getByteBuffer().array())
     }
 
     fun getByteBuffer(): ByteBuffer {

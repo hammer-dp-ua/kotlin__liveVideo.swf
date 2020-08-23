@@ -1,5 +1,6 @@
 package ua.dp.hammer.video.camera
 
+import ua.dp.hammer.video.camera.CommonConst.Companion.CONST_LENGTH_COMMAND_HEAD
 import java.nio.ByteBuffer
 
 class CommandHead {
@@ -29,12 +30,17 @@ class CommandHead {
     }
 
     fun getByteBuffer(): ByteBuffer {
-        return createByteBuffer(commandId, version, bySourceId, byDestId, byCharSet, byReserve,
-            payloadLength)
+        return createByteBuffer(commandId, version, bySourceId, byDestId, byCharSet, byReserve, payloadLength)
     }
 
-    fun getSize(): Int {
-        return commandId.size + version.size + bySourceId.size + byDestId.size + byCharSet.size +
-                byReserve.size + payloadLength.size
+    fun parse(response: ByteArray, startIndex: Int): Int {
+        fillArrays(response, startIndex, commandId, version, bySourceId, byDestId, byCharSet, byReserve, payloadLength)
+        return getSize()
+    }
+
+    companion object {
+        fun getSize(): Int {
+            return CONST_LENGTH_COMMAND_HEAD
+        }
     }
 }

@@ -18,9 +18,20 @@ class Packet {
         val byteBuffer = ByteBuffer.allocate(CONST_LENGTH_PACKET_HEAD + payloadCapacity)
 
         packetHead.setPayloadLength(payloadCapacity)
-        byteBuffer.put(packetHead.getByteBuffer())
-        byteBuffer.put(payload ?: throw IllegalStateException("Payload isn't set"))
+        byteBuffer.put(packetHead.getByteBuffer().array())
+        byteBuffer.put(payload?.array() ?: throw IllegalStateException("Payload isn't set"))
         return byteBuffer
+    }
+
+    fun parsePacketHead(response: ByteArray): Int {
+        packetHead.parse(response)
+        return getPacketHeadSize()
+    }
+
+    companion object {
+        fun getPacketHeadSize(): Int {
+            return CONST_LENGTH_PACKET_HEAD
+        }
     }
 
     private class PacketHead {
@@ -60,6 +71,10 @@ class Packet {
             byteBuffer.put(sReserve)
             byteBuffer.put(payloadLength)
             return byteBuffer
+        }
+
+        fun parse(response: ByteArray) {
+            fillArrays(response, 0, byMagic, byVersion, iSeq, iAck, byFlag, iOffset, sessionId, sReserve, payloadLength)
         }
     }
 }

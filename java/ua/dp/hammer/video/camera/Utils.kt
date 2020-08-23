@@ -51,11 +51,28 @@ fun createByteBuffer(vararg arrays: ByteArray): ByteBuffer {
     }
 
     val buffer = ByteBuffer.allocate(sumSize)
-    var offset = 0
-
     for (array in arrays) {
-        buffer.put(array, offset, array.size)
-        offset += array.size
+        buffer.put(array)
     }
     return buffer
+}
+
+fun fillArrays(source: ByteArray, startIndex: Int, vararg arrays: ByteArray) {
+    var readBytes = 0
+
+    for (array in arrays) {
+        source.copyInto(array, 0, startIndex + readBytes, readBytes + array.size)
+        readBytes += array.size
+    }
+}
+
+@ExperimentalUnsignedTypes
+fun parseInt(byteArray: ByteArray, startIndex: Int): Int {
+    var result = 0
+
+    result = result.or(byteArray[startIndex].toUByte().toInt() shl 24)
+    result = result.or(byteArray[startIndex + 1].toUByte().toInt() shl 16)
+    result = result.or(byteArray[startIndex + 2].toUByte().toInt() shl 8)
+    result = result.or(byteArray[startIndex + 3].toUByte().toInt())
+    return result
 }
