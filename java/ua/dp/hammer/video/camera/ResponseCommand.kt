@@ -1,6 +1,15 @@
 package ua.dp.hammer.video.camera
 
 class ResponseCommand {
+    private val commandHead = CommandHead()
+    private val response = Response()
+
+    @ExperimentalUnsignedTypes
+    fun parse(responseParam: ByteArray, startIndex: Int): Int {
+        var parsedBytes = commandHead.parse(responseParam, startIndex)
+        parsedBytes += response.parse(responseParam, parsedBytes + startIndex)
+        return parsedBytes
+    }
 
     private class Response {
         var iRequestId: Int = 0

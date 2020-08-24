@@ -1,6 +1,7 @@
 package ua.dp.hammer.video.camera
 
 class SecuritySession {
+    @ExperimentalUnsignedTypes
     fun sendLoginCommand() {
         val user = User()
         user.setUserName("admin")

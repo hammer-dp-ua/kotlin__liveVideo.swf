@@ -8,17 +8,17 @@ class CommandHead {
     private val version = byteArrayOf(0x1)
     private val bySourceId = ByteArray(32) // empty
     private val byDestId = ByteArray(32) // 0x31 0x30 0x31 0x38 0x41 0x33
-    private val byCharSet = ByteArray(0)
+    private val byCharSet = ByteArray(1)
     private val byReserve = ByteArray(2) // empty
     private val payloadLength = ByteArray(4) // User length
 
     init {
-        byDestId[31] = 0x31 //'1'
-        byDestId[30] = 0x30 //'0'
-        byDestId[29] = 0x31 //'1'
-        byDestId[28] = 0x38 //'8'
-        byDestId[27] = 0x41 //'A'
-        byDestId[26] = 0x33 //'3'
+        byDestId[0] = 0x30 //'0'
+        byDestId[1] = 0x30 //'0'
+        byDestId[2] = 0x31 //'1'
+        byDestId[3] = 0x38 //'8'
+        byDestId[4] = 0x41 //'A'
+        byDestId[5] = 0x33 //'3'
     }
 
     fun setCommandId(commandId: Int) {

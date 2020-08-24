@@ -8,6 +8,7 @@ import java.net.Socket
 import java.nio.ByteBuffer
 
 class TCPTransfer {
+    @ExperimentalUnsignedTypes
     fun sendCommand(commandContent: ByteBuffer) {
         val packet = Packet()
         packet.payload = commandContent
@@ -21,13 +22,13 @@ class TCPTransfer {
 
         Log.i("", "Response:")
 
-        val byteArray = ByteArray(1024)
-        socketInputStream.read(byteArray)
+        val response = ByteArray(1024)
+        socketInputStream.read(response)
 
         val parsedPacket = Packet()
-        var readBytes = parsedPacket.parsePacketHead(byteArray)
-        val commandHead = CommandHead()
-        readBytes += commandHead.parse(byteArray, readBytes)
+        var readBytes = parsedPacket.parsePacketHead(response)
+        val responseCommand = ResponseCommand()
+        readBytes += responseCommand.parse(response, readBytes)
 
         dataOutputStream.close()
         socketInputStream.close()

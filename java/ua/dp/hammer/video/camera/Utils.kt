@@ -61,7 +61,8 @@ fun fillArrays(source: ByteArray, startIndex: Int, vararg arrays: ByteArray) {
     var readBytes = 0
 
     for (array in arrays) {
-        source.copyInto(array, 0, startIndex + readBytes, readBytes + array.size)
+        val updatedStartIndex = startIndex + readBytes
+        source.copyInto(array, 0, updatedStartIndex, updatedStartIndex + array.size)
         readBytes += array.size
     }
 }

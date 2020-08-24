@@ -1,7 +1,6 @@
 package ua.dp.hammer.video.camera
 
 import ua.dp.hammer.video.camera.CommonConst.Companion.CONST_LENGTH_PACKET_HEAD
-import ua.dp.hammer.video.camera.CommonConst.Companion.CONST_LENGTH_PACKET_RESERVE
 import java.lang.IllegalStateException
 import java.nio.ByteBuffer
 
@@ -42,7 +41,7 @@ class Packet {
         val byFlag = byteArrayOf(0x00)
         val iOffset = ByteArray(4)
         val sessionId = ByteArray(2)
-        val sReserve = ByteArray(CONST_LENGTH_PACKET_RESERVE)
+        val sReserve = ByteArray(3)
         var payloadLength = ByteArray(4)
 
         init {
