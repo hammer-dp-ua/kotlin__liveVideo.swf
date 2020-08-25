@@ -9,7 +9,11 @@ class Packet {
     var payload: ByteBuffer? = null
 
     fun setSessionId(sessionId: Short) {
-        packetHead.setSessionId(sessionId)
+        fillBytesFromShort(sessionId, packetHead.sessionId)
+    }
+
+    fun getSessionId(): Short {
+        return getShort(packetHead.sessionId)
     }
 
     fun getByteBuffer(): ByteBuffer {
@@ -47,10 +51,6 @@ class Packet {
         init {
             fillBytesFromInt(1, iSeq)
             fillBytesFromInt(1, iAck)
-        }
-
-        fun setSessionId(sessionIdParam: Short) {
-            fillBytesFromShort(sessionIdParam, sessionId)
         }
 
         fun setPayloadLength(length: Int) {

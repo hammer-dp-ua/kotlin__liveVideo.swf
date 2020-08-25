@@ -39,8 +39,17 @@ fun fillBytesFromShort(digit: Short?, digitArray: ByteArray) {
 
     val toIntDigit = digit.toInt()
 
-    digitArray[1] = digit.toByte()
     digitArray[0] = (toIntDigit ushr 8).toByte()
+    digitArray[1] = digit.toByte()
+}
+
+@ExperimentalUnsignedTypes
+fun getShort(digitArray: ByteArray): Short {
+    var result = 0
+
+    result = result.or(digitArray[0].toUByte().toInt() shl 8)
+    result = result.or(digitArray[1].toUByte().toInt())
+    return result.toShort()
 }
 
 fun createByteBuffer(vararg arrays: ByteArray): ByteBuffer {

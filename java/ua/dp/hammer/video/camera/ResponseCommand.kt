@@ -4,7 +4,6 @@ class ResponseCommand {
     private val commandHead = CommandHead()
     private val response = Response()
 
-    @ExperimentalUnsignedTypes
     fun parse(responseParam: ByteArray, startIndex: Int): Int {
         var parsedBytes = commandHead.parse(responseParam, startIndex)
         parsedBytes += response.parse(responseParam, parsedBytes + startIndex)
@@ -16,7 +15,6 @@ class ResponseCommand {
         var iSucceedFlag: Int = 0
         var iErrorNo: Int = 0
 
-        @ExperimentalUnsignedTypes
         fun parse(response: ByteArray, startIndex: Int): Int {
             var readBytes = 0
 

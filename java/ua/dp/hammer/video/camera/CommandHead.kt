@@ -6,11 +6,11 @@ import java.nio.ByteBuffer
 class CommandHead {
     private val commandId = ByteArray(4)
     private val version = byteArrayOf(0x1)
-    private val bySourceId = ByteArray(32) // empty
-    private val byDestId = ByteArray(32) // 0x31 0x30 0x31 0x38 0x41 0x33
+    private val bySourceId = ByteArray(32)
+    private val byDestId = ByteArray(32)
     private val byCharSet = ByteArray(1)
-    private val byReserve = ByteArray(2) // empty
-    private val payloadLength = ByteArray(4) // User length
+    private val byReserve = ByteArray(2)
+    private val payloadLength = ByteArray(4)
 
     init {
         byDestId[0] = 0x30 //'0'
@@ -18,11 +18,11 @@ class CommandHead {
         byDestId[2] = 0x31 //'1'
         byDestId[3] = 0x38 //'8'
         byDestId[4] = 0x41 //'A'
-        byDestId[5] = 0x33 //'3'
+        byDestId[5] = 0x32 //'2'
     }
 
     fun setCommandId(commandId: Int) {
-        this.commandId[0] = commandId.toByte()
+        this.commandId[3] = commandId.toByte()
     }
 
     fun setPayloadLength(length: Int) {
