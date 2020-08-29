@@ -4,11 +4,11 @@ import ua.dp.hammer.video.camera.CommandConst.Companion.CONST_COMMANDID_SESSION_
 import java.nio.ByteBuffer
 
 class SessionHeartbeatCommand(sessionId: Short) {
-    private val commandHead = CommandHead()
     private val byteBuffer: ByteBuffer
 
     init {
         val sessionIdArray = ByteArray(2)
+        val commandHead = CommandHead()
 
         fillBytesFromShort(sessionId, sessionIdArray)
         commandHead.setPayloadLength(sessionIdArray.size)

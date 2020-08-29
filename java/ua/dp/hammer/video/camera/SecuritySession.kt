@@ -1,7 +1,7 @@
 package ua.dp.hammer.video.camera
 
 class SecuritySession {
-    private var iSessionId: Short = 0
+    private var sessionId: Short = 0
 
     fun sendLoginCommand() {
         val user = User()
@@ -9,16 +9,20 @@ class SecuritySession {
         user.setUserPassword("admin")
 
         val loginCommand = LoginCommand(user)
-        val response = TCPTransfer().sendCommand(loginCommand.getByteBuffer())
+        val response = TCPTransfer().sendCommand(loginCommand.getByteBuffer(), 0)
 
         processResponse(response)
     }
 
     fun sendHeartbeatCommand() {
-        val sessionHeartbeatCommand = SessionHeartbeatCommand(iSessionId)
-        val response = TCPTransfer().sendCommand(sessionHeartbeatCommand.getByteBuffer())
+        val sessionHeartbeatCommand = SessionHeartbeatCommand(sessionId)
+        val response = TCPTransfer().sendCommand(sessionHeartbeatCommand.getByteBuffer(), sessionId)
 
         processResponse(response)
+    }
+
+    fun getSessionId(): Short {
+        return sessionId
     }
 
     private fun processResponse(response: ByteArray) {
@@ -27,6 +31,6 @@ class SecuritySession {
         val responseCommand = ResponseCommand()
         responseCommand.parse(response, readBytes)
 
-        iSessionId = parsedPacket.getSessionId()
+        sessionId = parsedPacket.getSessionId()
     }
 }

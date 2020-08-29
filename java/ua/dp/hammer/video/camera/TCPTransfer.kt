@@ -8,9 +8,10 @@ import java.net.Socket
 import java.nio.ByteBuffer
 
 class TCPTransfer {
-    fun sendCommand(commandContent: ByteBuffer): ByteArray {
+    fun sendCommand(commandContent: ByteBuffer, sessionId: Short): ByteArray {
         val packet = Packet()
         packet.payload = commandContent
+        packet.setSessionId(sessionId)
 
         val socket = Socket("192.168.0.200", 30001)
         val dataOutputStream = DataOutputStream(socket.getOutputStream())

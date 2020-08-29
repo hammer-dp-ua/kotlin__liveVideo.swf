@@ -3,10 +3,11 @@ package ua.dp.hammer.video.camera
 import java.nio.ByteBuffer
 
 class LoginCommand(user: User) {
-    private val commandHead = CommandHead()
     private val byteBuffer: ByteBuffer
 
     init {
+        val commandHead = CommandHead()
+
         commandHead.setPayloadLength(user.getSize())
         commandHead.setCommandId(CommandConst.CONST_COMMANDID_LOGIN)
         byteBuffer = ByteBuffer

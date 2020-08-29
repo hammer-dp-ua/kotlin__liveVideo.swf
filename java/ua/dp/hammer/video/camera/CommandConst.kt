@@ -7,5 +7,6 @@ class CommandConst {
         const val CONST_COMMANDID_RESPONSE: Int = 5
         const val CONST_COMMANDID_HEARTBEAT: Int = 10
         const val CONST_COMMANDID_SESSION_HEARTBEAT: Int = 17
+        const val CONST_COMMANDID_VIDEO_STREAM_REQUEST:Int = 221
     }
 }

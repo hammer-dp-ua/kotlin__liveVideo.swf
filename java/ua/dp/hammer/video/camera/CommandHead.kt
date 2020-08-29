@@ -21,12 +21,16 @@ class CommandHead {
         byDestId[5] = 0x32 //'2'
     }
 
-    fun setCommandId(commandId: Int) {
-        this.commandId[3] = commandId.toByte()
+    fun setCommandId(commandIdParam: Int) {
+        fillBytesFromInt(commandIdParam, commandId)
     }
 
     fun setPayloadLength(length: Int) {
         fillBytesFromInt(length, payloadLength)
+    }
+
+    fun getPayloadLength(): Int {
+        return parseInt(payloadLength, 0)
     }
 
     fun getByteBuffer(): ByteBuffer {
